@@ -6,15 +6,15 @@ module.exports = {
     removeDeprecatedGapUtilities: true,
   },
   plugins: [],
-  // purge: {
-  //   content: ["./src/App.svelte"],
-  //   enabled: production, // disable purge in dev
-  // },
+  purge: {
+    content: ["./src/App.svelte"],
+    enabled: production, // disable purge in dev
+  },
   theme: {
     fontFamily: {
-      serif: 'DM Serif Display, serif',
-      sans: 'Roboto, sans-serif',
-      mono: 'Roboto Mono, monospace',
+      serif: "'DM Serif Display', serif",
+      sans: "'Roboto', sans-serif",
+      mono: "'Roboto Mono', monospace",
     },
     fontSize: {
       xxxs: ["8px", "16px"],
@@ -30,6 +30,8 @@ module.exports = {
       "5xl": "3rem",
       "6xl": "4rem",
       "7xl": "5rem",
+      "8xl": "6rem",
+      "9xl": "7rem",
     },
   },
 };
