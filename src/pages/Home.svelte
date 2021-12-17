@@ -8,9 +8,9 @@
 
   import { auth, googleProvider } from "../../firebase";
   import { signInWithPopup } from "firebase/auth";
-  import { authState } from "rxfire/auth";
   import { user } from "../store";
-
+  
+  import { authState } from "rxfire/auth";
   const unsubscribe = authState(auth).subscribe((u) => user.set(u));
 
   function login() {
@@ -19,7 +19,7 @@
 </script>
 
 <main
-  class="relative bg-gradient-to-b from-gray-50 via-white to-gray-100 text-black flex flex-col justify-center items-center"
+  class="relative bg-gradient-to-b from-gray-50 via-white to-gray-100 text-stone-800 flex flex-col justify-center items-center"
 >
   <Navbar {user} />
   <section

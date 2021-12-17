@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "watch:tailwind": "postcss public/tailwind.css -o public/global.css -w",
+    "watch:tailwind": "postcss public/tailwind.css -o public/global.css --watch",
     "build:tailwind": "cross-env NODE_ENV=production postcss public/tailwind.css -o public/global.css",
     "build": "npm run build:tailwind && rollup -c",
     "start": "sirv public --no-clear --single",
@@ -16,7 +16,7 @@
     "autoprefixer": "^10.4.0",
     "concurrently": "^6.4.0",
     "cross-env": "^7.0.3",
-    "postcss": "^8.4.4",
+    "postcss": "^8.4.5",
     "postcss-cli": "^9.0.2",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
@@ -24,9 +24,10 @@
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
     "svelte": "^3.0.0",
-    "tailwindcss": "^3.0.0"
+    "tailwindcss": "^3.0.2"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.4.0",
     "firebase": "^9.6.1",
     "sirv-cli": "^1.0.0",
     "svelte-navigator": "^3.1.5"
