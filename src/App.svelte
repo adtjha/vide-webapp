@@ -1,5 +1,5 @@
 <script>
-  import { Router } from "svelte-navigator";
+  import { Route, Router } from "svelte-navigator";
   import PrivateRoute from "./Components/PrivateRoute.svelte";
   import Dashboard from "./pages/Dashboard.svelte";
   import Profile from "./pages/Profile.svelte";
@@ -7,11 +7,19 @@
 
   import { authState } from "rxfire/auth";
   import { auth } from "../firebase";
+  import Products from "./pages/Products.svelte";
+  import Pricing from "./pages/Pricing.svelte";
   const unsubscribe = authState(auth).subscribe((u) => user.set(u));
 </script>
 
 <Router>
   <div>
+    <Route path="/pricing">
+      <Pricing />
+    </Route>
+    <Route path="/products">
+      <Products />
+    </Route>
     <PrivateRoute path="/" let:location>
       <Dashboard />
     </PrivateRoute>
