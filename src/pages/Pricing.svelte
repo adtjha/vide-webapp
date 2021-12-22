@@ -1,10 +1,5 @@
 <script>
-  import { auth } from "../../firebase";
-  import { user } from "../store";
-
-  import { authState } from "rxfire/auth";
   import Menu from "../Components/Menu.svelte";
-  const unsubscribe = authState(auth).subscribe((u) => user.set(u));
 
   let sl = 20; // session length
   let mp = 4; // minimum producers req.
@@ -62,104 +57,146 @@
 
 <main
   class="relative pt-12 snap-y snap-mandatory bg-white text-skin-base flex-initial">
-  <Menu {user} />
+  <Menu />
 
   <section
     id="pricing"
-    class="w-full snap-center h-max grid grid-flow-col grid-cols-1 grid-rows-1 justify-items-center items-center">
-    <div class="w-full py-8 px-4 rounded-2xl grid justify-items-center items-center">
-      <svg
+    class="w-full pt-6 snap-center h-max grid grid-flow-col grid-cols-1 grid-rows-1 justify-items-center items-center">
+    <div
+      class="w-full py-8 px-4 rounded-2xl grid justify-items-center items-center">
+      <!-- <svg
         class="w-full md:w-4/5 xl:w-1/2 m-4"
         viewBox="0 0 760 455"
         xmlns="http://www.w3.org/2000/svg">
-        <foreignObject x="0" y="0" width="760" height="455">
-          <table class="table-fixed bg-stone-300/10 w-[760px] aspect-[4/3]">
-            <thead>
-              <tr>
-                <th class="w-1/2" />
-                <th
-                  class="w-1/2 px-4 py-2 bg-green-200 text-stone-700 text-4xl font-serif font-bold text-center">
-                  Base
-                </th>
-              </tr>
-            </thead>
-            <tbody class="text-left">
-              <tr class="border border-stone-300">
-                <td class="px-12 py-4 text-stone-700">
-                  <div class="flex flex-col">
-                    <span class="text-stone-700 text-2xl font-serif font-bold"
-                      >Monthly Cost</span>
-                    <span class="text-stone-500 text-xs font-mono"
-                      >This cost will be charged each month, as a fee for using
-                      the service.</span>
-                  </div>
-                </td>
-                <td class="px-12 py-4 bg-green-100">
-                  <div class="flex flex-col">
-                    <span class="text-stone-700 text-2xl font-mono font-bold"
-                      >$9/month</span>
-                    <span class="text-stone-500 text-xs font-mono"
-                      >$199/month, after exceeding base quota</span>
-                  </div>
-                </td>
-              </tr>
+        <foreignObject x="0" y="0" width="760" height="455"> -->
+      <div class="w-full md:w-4/5">
+        <div class="w-full rounded-2xl bg-stone-50 overflow-hidden shadow">
+          <div
+            class="w-full px-4 py-2 bg-green-200 text-stone-700 text-4xl font-serif font-bold text-center">
+            Base
+          </div>
+          <div class="w-full text-left">
+            <div class="w-full flex flex-col lg:flex-row">
+              <div class="w-full lg:w-1/2 px-6 md:px-12 py-4 text-stone-700">
+                <div class="flex flex-col">
+                  <span class="text-stone-700 text-2xl font-serif font-bold"
+                    >Monthly Cost</span>
+                  <span class="text-stone-500 text-xs font-mono"
+                    >This cost will be charged each month, as a fee for using
+                    the service.</span>
+                </div>
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 mx-6 md:mx-12 lg:mx-2 text-stone-700 rotate-90 lg:rotate-0 -my-2 lg:my-auto z-10"
+                viewBox="0 0 20 20"
+                fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                  clip-rule="evenodd" />
+              </svg>
+              <div
+                class="w-full lg:w-1/2 m-auto lg:m-0 px-6 md:px-12 py-4 bg-green-100 flex flex-col">
+                <span class="text-stone-700 text-2xl font-mono font-bold">
+                  $9/month</span>
+                <span class="text-stone-500 text-xs font-mono">
+                  + 2% of usage cost per month, after exceeding base quota</span>
+              </div>
+            </div>
 
-              <tr class="border border-stone-300">
-                <td class="px-12 py-4  text-stone-700">
-                  <div class="flex flex-col">
-                    <span class="text-stone-700 text-2xl font-serif font-bold"
-                      >Included Consumer-min</span>
-                    <span class="text-stone-500 text-xs font-mono underline"
-                      ><a href="#consumer">What is consumer-min ?</a></span>
-                  </div>
-                </td>
-                <td class="px-12 py-4 bg-green-100 text-stone-700">
-                  <div class="flex flex-col">
-                    <span class="text-stone-700 text-2xl font-mono font-bold"
-                      >10,000</span>
-                    <span class="text-stone-500 text-xs font-mono">
-                      $0.001/consumer-min for track (audio or video), per
-                      additional consumer-min
-                    </span>
-                  </div>
-                </td>
-              </tr>
+            <div class="w-full flex flex-col lg:flex-row">
+              <div
+                class="w-full lg:w-1/2 px-6 md:px-12 py-4  text-stone-700 flex flex-col">
+                <span class="text-stone-700 text-2xl font-serif font-bold">
+                  Included Consumer-min</span>
+                <span class="text-stone-500 text-xs font-mono underline"
+                  ><a href="#consumer">What is consumer-min ?</a></span>
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 mx-6 md:mx-12 lg:mx-2 text-stone-700 rotate-90 lg:rotate-0 -my-2 lg:my-auto z-10"
+                viewBox="0 0 20 20"
+                fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                  clip-rule="evenodd" />
+              </svg>
+              <div
+                class="w-full lg:w-1/2 m-auto lg:m-0 px-6 md:px-12 py-4 bg-green-100 text-stone-700 flex flex-col">
+                <span class="text-stone-700 text-2xl font-mono font-bold"
+                  >10,000</span>
+                <span class="text-stone-500 text-xs font-mono">
+                  + $0.002 per consumer track per minute.
+                  For audio, 1 consumer track, and for video, 2 consumer tracks (1st for video, 2nd for audio) are considered for billing.
+                </span>
+              </div>
+            </div>
 
-              <tr class="border border-stone-300">
-                <td
-                  class="px-12 py-4  text-stone-700  text-2xl font-serif font-bold"
-                  >Programmatic rooms</td>
-                <td class="px-12 py-4 bg-green-100 text-stone-700">
-                  <span class="text-stone-700 text-2xl font-mono font-bold"
-                    >Unlimited</span>
-                </td>
-              </tr>
+            <div class="w-full flex flex-col lg:flex-row">
+              <div
+                class="w-full lg:w-1/2 px-6 md:px-12 py-4  text-stone-700  text-2xl font-serif font-bold">
+                Programmatic rooms
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 mx-6 md:mx-12 lg:mx-2 text-stone-700 rotate-90 lg:rotate-0 -my-2 lg:my-auto z-10"
+                viewBox="0 0 20 20"
+                fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                  clip-rule="evenodd" />
+              </svg>
+              <div
+                class="w-full lg:w-1/2 m-auto lg:m-0 px-6 md:px-12 py-4 bg-green-100 text-stone-700">
+                <span class="text-stone-700 text-2xl font-mono font-bold">
+                  Unlimited
+                </span>
+              </div>
+            </div>
 
-              <tr class="border border-stone-300">
-                <td
-                  class="px-12 py-4 text-stone-700  text-2xl font-serif font-bold"
-                  >Max users</td>
-                <td class="px-12 py-4 bg-green-100 text-stone-700">
-                  <div class="flex flex-col">
-                    <span class="text-stone-700 text-2xl font-mono font-bold"
-                      >150
-                    </span>
-                    <span class="text-stone-500 text-xs font-mono">
-                      unlimited users in a session, coming soon.
-                    </span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </foreignObject>
-      </svg>
+            <div class="w-full flex flex-col lg:flex-row">
+              <div
+                class="w-full lg:w-1/2 px-6 md:px-12 py-4 text-stone-700  text-2xl font-serif font-bold">
+                Max users
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 mx-6 md:mx-12 lg:mx-2 text-stone-700 rotate-90 lg:rotate-0 -my-2 lg:my-auto z-10"
+                viewBox="0 0 20 20"
+                fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                  clip-rule="evenodd" />
+              </svg>
+              <div
+                class="w-full lg:w-1/2 m-auto lg:m-0 px-6 md:px-12 py-4 bg-green-100 text-stone-700 flex flex-col">
+                <span class="text-stone-700 text-2xl font-mono font-bold">
+                  150
+                </span>
+                <span class="text-stone-500 text-xs font-mono">
+                  unlimited users in a session, coming soon.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- </foreignObject>
+      </svg> -->
 
-      <div class="w-full md:w-4/5 flex flex-col md:flex-row items-center lg:items-start justify-center">
-        <div class="w-full bg-stone-50 rounded-2xl overflow-hidden md:w-1/2 lg:w-2/3 m-4 px-4">
+      <div
+        class="w-full md:w-4/5 flex flex-col md:flex-row items-center md:items-start justify-center">
+        <div
+          class="w-full bg-stone-50 rounded-2xl overflow-hidden shadow md:w-1/2 lg:w-2/3 m-4 px-0">
           <div class="grid grid-flow-row-dense">
-            <div class="w-full lg:border-b lg:border-stone-300 flex flex-col lg:flex-row items-stretch justify-center lg:py-4 lg:px-4 lg:space-x-2">
-              <div class="lg:w-1/2 border-b border-stone-300 lg:border-b-0 grid grid-rows-2 items-center justify-items-center space-y-2 lg:pr-2 lg:py-2 py-4">
+            <div
+              class="w-full lg:border-b lg:border-stone-300 flex flex-col lg:flex-row items-stretch justify-center lg:py-4 lg:px-4 lg:space-x-2">
+              <div
+                class="lg:w-1/2 border-b border-stone-300 px-4 lg:px-0 lg:border-b-0 grid grid-rows-2 items-center justify-items-center space-y-2 lg:pr-2 lg:py-2 py-4">
                 <div class="w-full flex flex-row items-center justify-between">
                   <span class="font-serif text-lg font-bold">Session Type</span>
                 </div>
@@ -170,9 +207,11 @@
                   <option>Audio</option>
                 </select>
               </div>
-              <div class="lg:w-1/2 border-b border-stone-300 lg:border-b-0 grid grid-rows-2 items-center justify-items-center space-y-2 lg:pl-2 lg:py-2 py-4">
+              <div
+                class="lg:w-1/2 border-b border-stone-300 px-4 lg:px-0 lg:border-b-0 grid grid-rows-2 items-center justify-items-center space-y-2 lg:pl-2 lg:py-2 py-4">
                 <div class="w-full flex flex-row items-center justify-between">
-                  <span class="font-serif text-lg font-bold">Session Length</span>
+                  <span class="font-serif text-lg font-bold"
+                    >Session Length</span>
                   <span>
                     <span
                       class="p-1 bg-white font-mono font-bold rounded focus:ring-1 focus:ring-stone-500"
@@ -188,7 +227,8 @@
                   on:input={(e) => e.target.value < msl && (sl = msl)} />
               </div>
             </div>
-            <div class="grid grid-rows-2 border-b border-stone-300 items-center justify-items-start space-y-2 py-4 lg:px-4">
+            <div
+              class="grid grid-rows-2 border-b border-stone-300 items-center justify-items-start space-y-2 py-4 px-4">
               <div class="w-full flex flex-row items-center justify-between">
                 <span class="font-serif text-lg font-bold">
                   Total Users <span class="text-xs">(in a Session)</span>
@@ -215,10 +255,12 @@
                 are video/audio producers.</span>
               {#if !avp}
                 <div class="w-full flex flex-col lg:flex-row">
-                  <div class="w-full lg:border lg:border-stone-300 lg:rounded-md lg:mr-1 lg:w-1/2 flex flex-col lg:p-2 space-y-2">
+                  <div
+                    class="w-full lg:border lg:border-stone-300 lg:rounded-md lg:mr-1 lg:w-1/2 flex flex-col lg:p-2 space-y-2">
                     <div
                       class="w-full flex flex-row items-center justify-between">
-                      <span class="font-serif text-base text-stone-700">Hosts/Speakers</span>
+                      <span class="font-serif text-base text-stone-700"
+                        >Hosts/Speakers</span>
                       <span
                         class="p-1 bg-white font-mono font-semibold rounded focus:ring-1 focus:ring-stone-500"
                         bind:innerHTML={hc}
@@ -231,10 +273,12 @@
                       class="block w-full h-1 appearance-none rounded-md bg-stone-300 border-transparent accent-green-500 focus:border-stone-500 focus:bg-stone-500 focus:ring-0"
                       bind:value={hc} />
                   </div>
-                  <div class="w-full lg:border lg:border-stone-300 lg:rounded-md lg:ml-1 lg:w-1/2 flex flex-col lg:p-2 space-y-2">
+                  <div
+                    class="w-full lg:border lg:border-stone-300 lg:rounded-md lg:ml-1 lg:w-1/2 flex flex-col lg:p-2 space-y-2">
                     <div
                       class="w-full flex flex-row items-center justify-between">
-                      <span class="font-serif text-base text-stone-700">Viewers/Listeners</span>
+                      <span class="font-serif text-base text-stone-700"
+                        >Viewers/Listeners</span>
                       <span
                         class="p-1 bg-white font-mono font-semibold rounded focus:ring-1 focus:ring-stone-500"
                         bind:innerHTML={vc}
@@ -250,10 +294,12 @@
                 </div>
               {/if}
             </div>
-            <div class="grid grid-rows-3 items-center justify-items-center space-y-2 py-4 lg:px-4">
+            <div
+              class="grid grid-rows-3 items-center justify-items-center space-y-2 py-4 px-4">
               <div class="w-full flex flex-row items-center justify-between">
                 <div class="w-3/4 flex flex-col items-start justify-center">
-                  <span class="font-serif text-lg font-bold">Monthly Room Count</span>
+                  <span class="font-serif text-lg font-bold"
+                    >Monthly Room Count</span>
                   <span class="text-stone-500 text-sm">
                     Total number of rooms created programmatically, using our
                     api in a month.
@@ -279,7 +325,8 @@
             </div>
           </div>
         </div>
-        <div class="w-full md:w-1/2 lg:w-1/3 m-4 bg-green-100 overflow-hidden rounded-2xl flex flex-col items-center justify-center">
+        <div
+          class="w-full md:w-1/2 lg:w-1/3 m-4 bg-green-100 overflow-hidden rounded-2xl flex flex-col items-center justify-center">
           <div class="p-2 font-serif font-bold text-2xl">Charges</div>
           <div class="w-full h-px bg-stone-300" />
           <div

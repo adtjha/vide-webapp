@@ -1,14 +1,11 @@
 <script>
-  export let photoURL;
+  import { user } from "../store";
+  import { login, logout } from "../../firebase";
+  import { onMount } from "svelte";
   let open = false;
   const setOpen = () => (open = !open);
 
-  import { auth, googleProvider } from "../../firebase";
-  import { signInWithPopup } from "firebase/auth";
-
-  function login() {
-    signInWithPopup(auth, googleProvider);
-  }
+  onMount(() => console.log("Menu Mounted"));
 </script>
 
 <nav
@@ -23,9 +20,9 @@
       class="md:w-full md:flex flex-row flex-grow justify-between items-center hidden">
       <ul
         class=" flex flex-row items-center justify-evenly capitalize lg:space-x-2 md:space-x-0">
-        {#if photoURL}
+        {#if $user.uid}
           <li class="btn btn-plain">
-            <a href="/dashboard"> Dashboard </a>
+            <a href="/"> Dashboard </a>
           </li>
           <li class="btn btn-plain">
             <a href="/profile"> Profile </a>
@@ -39,15 +36,16 @@
           </li>
         {/if}
       </ul>
-      {#if !photoURL}
+      {#if !$user.uid}
         <ul
-          class=" flex flex-row items-center justify-evenly space-x-6 capitalize">
-          <li class="btn btn-outlined">
-            <a href="/">login</a>
-          </li>
-          <li class="btn btn-green">
-            <a href="/">signup</a>
-          </li>
+          class="flex flex-row items-center justify-evenly space-x-6 capitalize cursor-pointer">
+          <li class="btn btn-outlined" on:click={login}>login</li>
+          <li class="btn btn-green">Signup</li>
+        </ul>
+      {:else}
+        <ul
+          class=" flex flex-row items-center justify-evenly space-x-6 capitalize cursor-pointer">
+          <li class="btn btn-outlined" on:click={logout}>Logout</li>
         </ul>
       {/if}
     </div>
@@ -71,7 +69,7 @@
       class="text-2xl text-stone-200 z-20 p-4 flex flex-col items-center justify-evenly">
       <ul
         class="w-full p-4 flex flex-col items-center justify-evenly space-y-4">
-        {#if photoURL}
+        {#if $user.uid}
           <li class="btn btn-plain">
             <a href="/dashboard"> Dashboard </a>
           </li>
@@ -87,11 +85,16 @@
           </li>
         {/if}
       </ul>
-      {#if !photoURL}
+      {#if !$user.uid}
         <ul
           class="mt-8 w-full p-4 flex flex-row items-center justify-evenly space-x-8">
           <li class="btn btn-outlined" on:click={login}>Login</li>
           <li class="btn btn-green">Signup</li>
+        </ul>
+      {:else}
+        <ul
+          class="mt-8 w-full p-4 flex flex-row items-center justify-evenly space-x-8">
+          <li class="btn btn-outlined" on:click={logout}>Logout</li>
         </ul>
       {/if}
     </div>

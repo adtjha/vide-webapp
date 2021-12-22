@@ -3,13 +3,9 @@
   import PrivateRoute from "./Components/PrivateRoute.svelte";
   import Dashboard from "./pages/Dashboard.svelte";
   import Profile from "./pages/Profile.svelte";
-  import { user } from "../src/store";
-
-  import { authState } from "rxfire/auth";
-  import { auth } from "../firebase";
   import Products from "./pages/Products.svelte";
   import Pricing from "./pages/Pricing.svelte";
-  const unsubscribe = authState(auth).subscribe((u) => user.set(u));
+
 </script>
 
 <Router>
@@ -28,3 +24,6 @@
     </PrivateRoute>
   </div>
 </Router>
+
+<!-- apikey : chS52si83GHxohnS5C53vjEKc0LkjrcraEFmnjR -->
+<!-- publickey : tW2ONzka5NXEurlZuwqykPrwJU06SSON96uws9 -->

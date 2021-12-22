@@ -1,23 +1,16 @@
 <script>
-  import { auth } from "../../firebase";
-  import { user } from "../store";
-
-  import { authState } from "rxfire/auth";
   import Menu from "../Components/Menu.svelte";
-  const unsubscribe = authState(auth).subscribe((u) => user.set(u));
 </script>
 
 <main
   class="bg-white text-skin-base h-screen w-full flex flex-col items-center justify-start mt-32 lg:mt-16">
-  <Menu {user} />
-  <section
-    id="main"
-    class="lg:mt-16 flex items-center justify-center">
+  <Menu />
+  <section id="main" class="lg:mt-16 flex items-center justify-center">
     <div
       class="w-4/5 grid grid-rows-[auto] lg:grid-cols-2 lg:grid-rows-[auto] gap-12 items-center justify-items-center">
       <div class="sm:text-center row-span-1 lg:text-left">
         <h1
-          class="text-4xl sm:text-5xl md:text-6xl tracking-tight leading-tight font-serif font-extrabold text-gray-900">
+          class="text-4xl sm:text-5xl md:text-6xl tracking-tight leading-tight font-serif font-extrabold text-gray-900 ring-0">
           <span class="block xl:inline"> Video conference to enrich your </span>
           <span class="block text-lime-500 xl:inline"> online business </span>
         </h1>
@@ -379,5 +372,5 @@
         </div>
       </div>
     </div>
-  </section> 
+  </section>
 </main>
