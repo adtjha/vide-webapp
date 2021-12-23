@@ -35,7 +35,7 @@
 
   $: apcu = pcu - 10000; // consumer track usage exceeded beyond free limit
 
-  $: pcCost = pcu * 0.01; // producer count cost
+  $: pcCost = pcu * 0.00005; // producer count cost
 
   // $: pm = pc * sl * tuf; // participant-minute
   // $: pmct = st === "Audio" ? 0.001 : 0.004; // participant-minute charge type
