@@ -7,29 +7,24 @@
   let uf = 1; // usage frequency
   let uft = "Weekly"; // usage frequency type
   let st; // session type
-  let rch = 0.05; // room charge
+  // let rch = 0.05; // room charge
 
   let avp = false; // all are producers
-  let hc = 57; // hosts count
-
-  $: vc = avp ? hc - 1 : hc + vc < 150 ? vc : 150 - hc; // viewers count
-  $: pc = avp ? hc : hc + vc > 150 ? 150 : hc + vc; // producer count
+  let hc = 6; // hosts count
+  // $: vc = avp ? hc - 1 : hc + vc < 100 ? vc : 100 - hc; // viewers count
+  let vc = 24;
+  // $: pc = avp ? hc : hc + vc > 10000 ? 10000 : hc + vc; // producer count
+  $: pc = parseInt(hc) + parseInt(vc);
 
   const nn = (n) => {
-    return isNaN(n)
-      ? parseInt(n).isSafeInteger
+    return Number.isNaN(n)
+      ? Number.isSafeInteger(parseFloat(n))
         ? parseInt(n)
-        : parseInt(parseInt(n).toFixed(2))
-      : n.isSafeInteger
-      ? n
-      : parseInt(n.toFixed(2));
+        : parseFloat(parseFloat(n).toFixed(2))
+      : Number.isSafeInteger(n)
+      ? parseInt(n)
+      : parseFloat(parseFloat(n).toFixed(2));
   }; // normalize number, remove decimal if not required, or concatenate it
-
-  const fn = (n) => {
-    return new Intl.NumberFormat("en-UK", {
-      maximumSignificantDigits: 3,
-    }).format(n);
-  }; // format number
 
   $: tcpu = st === "Audio" ? 1 : 2; // track count per user
 
@@ -40,7 +35,7 @@
 
   $: apcu = pcu - 10000; // consumer track usage exceeded beyond free limit
 
-  $: pcCost = apcu * 0.002; // producer count cost
+  $: pcCost = pcu * 0.01; // producer count cost
 
   // $: pm = pc * sl * tuf; // participant-minute
   // $: pmct = st === "Audio" ? 0.001 : 0.004; // participant-minute charge type
@@ -51,8 +46,8 @@
   // $: etuf = tuf - 200; // extra total usage frequency in a month
   // $: rc = tuf > 200 ? nn(etuf * rch) : 0; // room cost
 
-  $: mc = apcu > 1000 ? 0.02 * pcCost + 9 : 9; // monthly costs
-  $: tc = pcCost > 0 ? fn(nn(mc + pcCost)) : fn(nn(mc)); // total monthly costs
+  let mc = 1; // monthly costs
+  $: tc = pcCost > 0 ? nn(mc + pcCost) : nn(mc); // total monthly costs
 </script>
 
 <main
@@ -101,7 +96,7 @@
                 <span class="text-stone-700 text-2xl font-mono font-bold">
                   $9/month</span>
                 <span class="text-stone-500 text-xs font-mono">
-                  + 2% of usage cost per month, after exceeding base quota</span>
+                  + 20% of usage cost per month, after exceeding base quota</span>
               </div>
             </div>
 
@@ -128,8 +123,9 @@
                 <span class="text-stone-700 text-2xl font-mono font-bold"
                   >10,000</span>
                 <span class="text-stone-500 text-xs font-mono">
-                  + $0.002 per consumer track per minute.
-                  For audio, 1 consumer track, and for video, 2 consumer tracks (1st for video, 2nd for audio) are considered for billing.
+                  + $0.002 per consumer track per minute. For audio, 1 consumer
+                  track, and for video, 2 consumer tracks (1st for video, 2nd
+                  for audio) are considered for billing.
                 </span>
               </div>
             </div>
@@ -335,21 +331,28 @@
               <div class="w-3/5 pl-2 flex flex-col items-start">
                 <span class="font-serif font-bold text-lg">Usage Costs</span>
                 <span class="text-sm text-stone-500">
-                  For handling {fn(cc)} tracks, over {fn(tuf)} sessions, where each
-                  session was {sl} minutes long, and had approximately over {pc}
+                  For handling {nn(cc)} tracks, over {nn(tuf)} sessions,
+                  where each session was {sl} minutes long, and had approximately
+                  over {pc}
                   users interacting.</span>
                 <span class="text-base font-serif text-stone-700">
-                  {fn(cc)} consumer tracks
+                  {nn(cc)} consumer tracks
                 </span>
                 <span class="text-base font-serif text-stone-700"
-                  >{fn(tuf * sl)} mins</span>
+                  >{nn(tuf * sl)} mins</span>
                 <span class="text-base font-serif text-stone-700">
-                  {fn(cc * tuf * sl)} consumer-min
+                  {nn(cc * tuf * sl)} consumer-min
                 </span>
               </div>
-              <h1 class="w-2/5 font-mono font-bold text-lg text-right pr-2">
-                {pcCost > 0 ? `$${fn(pcCost)}` : "-"}
+              {#if pcu < 100}
+              <h1 class="w-2/5 font-mono font-bold text-lg text-right pr-2 line-through">
+                {pcCost > 0 ? `$${nn(pcCost)}` : "-"}
               </h1>
+              {:else}
+              <h1 class="w-2/5 font-mono font-bold text-lg text-right pr-2">
+                {pcCost > 0 ? `$${nn(pcCost)}` : "-"}
+              </h1>
+              {/if}
             </div>
             <div class="w-full my-2 flex flex-row items-start justify-evenly">
               <div class="w-3/5 pl-2 flex flex-col items-start">
@@ -358,7 +361,7 @@
                   >Base Cost for using our services.</span>
               </div>
               <h1 class="w-2/5 font-mono font-bold text-lg text-right pr-2">
-                ${fn(mc)}
+                ${nn(mc)}
               </h1>
             </div>
           </div>
@@ -368,7 +371,7 @@
               <span class="font-serif font-bold text-xl">Total</span>
             </div>
             <h1 class="w-2/5 font-mono font-bold text-xl text-right">
-              ${tc}
+              ${nn(tc)}
             </h1>
           </div>
         </div>

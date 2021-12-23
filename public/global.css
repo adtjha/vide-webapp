@@ -1446,6 +1446,9 @@ select {
 .underline {
   text-decoration: underline;
 }
+.line-through {
+  text-decoration: line-through;
+}
 .accent-green-500 {
   accent-color: #22c55e;
 }
